@@ -4,10 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bootstrap</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
     <h1>DUCKS</h1>
+    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+          <button type="button" class="btn btn-secondary" id="small">Small</button>
+          <button type="button" class="btn btn-secondary" id="medium">Medium</button>
+          <button type="button" class="btn btn-secondary" id="large">Large</button>
+        </div>
+        <div class="btn-group mr-2" role="group" aria-label="Second group">
+          <button type="button" class="btn btn-secondary" id="male">Male</button>
+          <button type="button" class="btn btn-secondary" id="female">Female</button>
+        </div>
+        <div class="btn-group" role="group" aria-label="Third group">
+          <button type="button" class="btn btn-secondary" id="rubber">Rubber</button>
+        </div>
+      </div>
     <div id="duckContainer"></div>
     <script src="main.js"></script>
 </body>
