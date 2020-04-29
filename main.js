@@ -11,7 +11,7 @@ const ducks = [
     {color: 'yellow',
     name: 'Ernie',
     breed: 'pekin',
-    size: 'tiny',
+    size: 'small',
     temperament: 'quiet',
     imageUrl: 'https://s3.distributorcentral.com/uploads/6/1/6172FA6BE110D08BC61F6307A7E71B3C.jpg',
     gender: 'male',
@@ -38,12 +38,12 @@ const ducks = [
     {color: 'pink',
     name: 'Cindy',
     breed: 'pekin',
-    size: 'tiny',
+    size: 'small',
     temperament: 'stoic',
     imageUrl: 'https://www.duckshop.com/shop_cfg/rubberducks/badeente09.05.201209-04-07.jpg',
     gender: 'female',
     age: 0,
-    isRubber: true},
+    isRubber: false},
     {color: 'brown',
     name: 'Juan',
     breed: 'indian runner',
@@ -56,7 +56,7 @@ const ducks = [
     {color: 'yellow',
     name: 'Svenson',
     breed: 'blue swedish',
-    size: 'tiny',
+    size: 'small',
     temperament: 'curious',
     imageUrl: 'https://www.purelypoultry.com/images/blue-swedish-ducklings_01.jpg',
     gender: 'male',
@@ -78,23 +78,70 @@ const printToDom = (selector, textToPrint) => {
     selectedDiv.innerHTML = textToPrint;
 }
 
-const buildDuckCards = () => {
+const buildDuckCards = (duckCollection) => {
     let domString = '';
-    for (let i=0;i<ducks.length;i++) {
-    
+    domString += '<div class="row">';
+    for (let i=0;i<duckCollection.length;i++) {
         domString += `
-        <div class="duck">
-            <h2>${ducks[i].name}</h2>
-            <img src="${ducks[i].imageUrl}" alt="image of ${ducks[i].name}">
-            <p>${ducks[i].name} is a ${ducks[i].age}-year old ${ducks[i].size} ${ducks[i].breed} who is often ${ducks[i].temperament}.</p>`;
-        if (ducks[i].isRubber) {
-            domString += '<h4>NOT A REAL DUCK</h4>';
-        };
+        <div class="card duck col-4" style="width: 18rem;">
+        <h3>${duckCollection[i].name}</h3>
+            <img src="${duckCollection[i].imageUrl}" class="card-img-top" alt="pic of ${duckCollection[i].name}">
+            <div class="card-body">
+                <p class="card-text">${duckCollection[i].name} is a ${duckCollection[i].age}-year old ${duckCollection[i].size} ${duckCollection[i].breed} who is often ${duckCollection[i].temperament}.</p>`;
+                if (ducks[i].isRubber) {
+                    domString += '<h4>NOT A REAL DUCK</h4>';
+                };
+            domString += '</div>'
         domString += '</div>'
-        
     };
+    domString += '</div>'
     return domString;
 }
 
+const filterDucksSizeEvent = (event) => {
+    const buttonId = event.target.id;
+    const tempDuckCollection = [];
+    for (let i=0;i<ducks.length;i++) {
+        if (ducks[i].size === buttonId) {
+            tempDuckCollection.push(ducks[i]);
+        }
+    }
+    printToDom('#duckContainer', buildDuckCards(tempDuckCollection));
+}
 
-printToDom('#duckContainer', buildDuckCards());
+const filterDucksGenderEvent = (event) => {
+    const buttonId = event.target.id;
+    const tempDuckCollection = [];
+    for (let i=0;i<ducks.length;i++) {
+        if (ducks[i].gender === buttonId) {
+            tempDuckCollection.push(ducks[i]);
+        }
+    }
+    printToDom('#duckContainer', buildDuckCards(tempDuckCollection));
+}
+
+const filterDucksRubberEvent = () => {
+    const tempDuckCollection = [];
+    for (let i=0;i<ducks.length;i++) {
+        if (ducks[i].isRubber === true) {
+            tempDuckCollection.push(ducks[i]);
+        }
+    }
+    printToDom('#duckContainer', buildDuckCards(tempDuckCollection));
+}
+
+const clickEvents = () => {
+    document.querySelector('#small').addEventListener('click', filterDucksSizeEvent);
+    document.querySelector('#medium').addEventListener('click', filterDucksSizeEvent);
+    document.querySelector('#large').addEventListener('click', filterDucksSizeEvent);
+    document.querySelector('#male').addEventListener('click', filterDucksGenderEvent);
+    document.querySelector('#female').addEventListener('click', filterDucksGenderEvent);
+    document.querySelector('#rubber').addEventListener('click', filterDucksRubberEvent);
+}
+
+const init = () => {
+    printToDom('#duckContainer', buildDuckCards(ducks));
+    clickEvents();
+}
+
+init ();
